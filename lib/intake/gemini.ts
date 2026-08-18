@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { z } from "zod";
 
 import { extractionPatchSchema } from "./schema";
@@ -16,6 +16,7 @@ Return only schema-conforming JSON. Extract facts, not legal conclusions.
 Rules:
 - Never invent, assume, diagnose, estimate case value, determine fault, promise representation, or give legal advice.
 - Only update a field when the caller explicitly supplies or corrects it in the latest answer. Use earlier transcript only to resolve references.
+- Extract every supported explicit fact from the latest answer. One broad answer may update every intake field; do not stop after finding only the first few facts.
 - Preserve the caller's wording for names, dates, locations, injuries, treatment, insurers, and accident details. Do not translate proper names.
 - When the caller explicitly corrects a scalar, emit the corrected value in updates.
 - Use null only when the caller explicitly withdraws or says they do not know a previously supplied scalar value.
@@ -74,7 +75,7 @@ ${latestAnswer}`,
       systemInstruction: SYSTEM_PROMPT,
       responseMimeType: "application/json",
       responseJsonSchema: schema,
-      temperature: 0,
+      thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
       // Gemini 3 counts internal reasoning against this budget. Leave enough
       // room for the complete schema so the JSON response is never truncated.
       maxOutputTokens: 4_096,

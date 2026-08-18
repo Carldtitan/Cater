@@ -59,7 +59,7 @@ export async function extractIntakePatch({
   const model =
     configuredModel && /^gemini-[a-z0-9.-]+$/i.test(configuredModel)
       ? configuredModel
-      : "gemini-3-flash-preview";
+      : "gemini-3.5-flash";
   const response = await ai.models.generateContent({
     model,
     contents: `Current language: ${currentLanguage}

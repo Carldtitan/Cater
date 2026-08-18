@@ -35,6 +35,7 @@ type ExtractInput = {
   currentLanguage: IntakeLanguage;
   transcript: TranscriptEntry[];
   latestAnswer: string;
+  focusFields?: readonly string[];
 };
 
 export async function extractIntakePatch({
@@ -42,6 +43,7 @@ export async function extractIntakePatch({
   currentLanguage,
   transcript,
   latestAnswer,
+  focusFields = [],
 }: ExtractInput): Promise<ExtractionPatch> {
   const apiKey = process.env.GEMINI_HACK_API_KEY;
   if (!apiKey) throw new Error("GEMINI_HACK_API_KEY is not configured");
@@ -71,7 +73,9 @@ Conversation transcript:
 ${formatTranscript(transcript)}
 
 Latest caller answer to process:
-${latestAnswer}`,
+${latestAnswer}
+
+${focusFields.length ? `Focused review: an earlier extraction still missed these fields: ${focusFields.join(", ")}. Re-read the latest answer specifically for explicit facts that belong in those fields.` : "Review the complete answer for every supported intake field."}`,
     config: {
       systemInstruction: SYSTEM_PROMPT,
       responseMimeType: "application/json",

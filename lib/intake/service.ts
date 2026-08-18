@@ -40,14 +40,31 @@ export async function processIntakeTurn({
     ...transcript,
     callerEntry,
   ]);
-  const patch = await extractIntakePatch({
+  let patch = await extractIntakePatch({
     currentIntake: session.intake,
     currentLanguage: session.language,
     transcript: mergedTranscript,
     latestAnswer,
   });
-  const intake = mergeIntake(session.intake, patch);
-  const missingFields = calculateMissingFields(intake);
+  let intake = mergeIntake(session.intake, patch);
+  let missingFields = calculateMissingFields(intake);
+
+  // Broad answers often contain many facts. Structured models can occasionally
+  // omit one even when it is explicit, so review only the remaining fields and
+  // merge the additional model output instead of relying on a single pass.
+  if (latestAnswer.length >= 120) {
+    for (let review = 0; review < 2 && missingFields.length; review += 1) {
+      patch = await extractIntakePatch({
+        currentIntake: intake,
+        currentLanguage: patch.language,
+        transcript: mergedTranscript,
+        latestAnswer,
+        focusFields: missingFields,
+      });
+      intake = mergeIntake(intake, patch);
+      missingFields = calculateMissingFields(intake);
+    }
+  }
   const question = nextQuestion(
     patch.language,
     missingFields,

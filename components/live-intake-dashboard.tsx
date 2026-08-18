@@ -121,17 +121,17 @@ const SAMPLES = [
   {
     label: "English",
     value:
-      "My name is Jordan Lee. I was rear-ended last Friday at the corner of Oak and 12th in San Francisco. My neck and lower back have hurt since then, and I went to urgent care the same evening. The police made a report. The other driver gave me their insurance card, and I do not have a lawyer.",
+      "My name is Jordan Lee, and you can reach me at 415-555-0184. Last Friday, I was stopped at a red light at the corner of Oak and 12th in San Francisco when another driver rear-ended me. I believe the other driver caused the accident. My neck and lower back have hurt since then, and I went to urgent care the same evening. The police made a report. The other driver gave me their insurance card, and I do not have a lawyer.",
   },
   {
     label: "Español",
     value:
-      "Me llamo Jordan Lee. El viernes pasado otro auto chocó contra la parte trasera de mi coche en la esquina de Oak y la calle 12 en San Francisco. Me duelen el cuello y la espalda baja, y fui a urgencias esa misma noche. La policía hizo un reporte. El otro conductor me dio su seguro y no tengo abogado.",
+      "Me llamo Jordan Lee y mi número es 415-555-0184. El viernes pasado estaba detenido en un semáforo en rojo en la esquina de Oak y la calle 12 en San Francisco cuando otro auto chocó contra la parte trasera de mi coche. Creo que el otro conductor causó el accidente. Me duelen el cuello y la espalda baja, y fui a urgencias esa misma noche. La policía hizo un reporte. El otro conductor me dio su seguro y no tengo abogado.",
   },
   {
     label: "中文",
     value:
-      "我叫 Jordan Lee。上周五，我在旧金山 Oak 街和第十二街的路口被后车追尾。之后我的颈部和下背部一直疼痛，当晚去了急诊。警方做了事故报告，对方给了我保险信息，我目前没有律师。",
+      "我叫 Jordan Lee，我的电话号码是 415-555-0184。上周五，我在旧金山 Oak 街和第十二街的红灯前停车时被后车追尾。我认为是后车司机造成了事故。之后我的颈部和下背部一直疼痛，当晚去了急诊。警方做了事故报告，对方给了我保险信息，我目前没有律师。",
   },
 ] as const;
 
